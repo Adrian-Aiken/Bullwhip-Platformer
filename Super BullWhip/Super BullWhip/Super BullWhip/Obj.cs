@@ -52,8 +52,8 @@ namespace Super_BullWhip
         }
         public float xSpeed
         {
-            get { return speed.Y; }
-            set { speed.Y = value; }
+            get { return speed.X; }
+            set { speed.X = value; }
         }
         public float ySpeed
         {
