@@ -35,6 +35,9 @@ namespace Super_BullWhip
         // basically an overlay color for the object, so like, for the whipspace portals, we would only need one sprite, and then change the color of its object
         public Color color = Color.White;
         // getters and setters for the position, speed, etc, so that instead of having to type obj.pos.x, you can just type obj.x
+        // type of object
+        public enum PointType { SwingPoint, SlingPoint, Pullblock, Normal }
+        public PointType type = PointType.Normal;
         public float x
         {
             get { return pos.X; }
@@ -98,6 +101,10 @@ namespace Super_BullWhip
         {
             // draws the object using its texture, screen position, rotation and scale
             doc.SpriteDraw(tex, screenPos, color * alpha, origin, rot, drawScale * scale);
+        }
+        public void remove()
+        {
+            doc.RemoveObj(this);
         }
     }
 }

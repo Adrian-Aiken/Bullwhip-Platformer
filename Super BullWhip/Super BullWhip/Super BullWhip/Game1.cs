@@ -20,7 +20,7 @@ namespace Super_BullWhip
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        List<Obj> objList;
+        public List<Obj> objList;
         public Controls controls;
         public World world;
         public Game1()
@@ -51,6 +51,10 @@ namespace Super_BullWhip
             objList.Add(obj);
             Console.Write("Obj Added");
         }
+        public void RemoveObj(Obj obj)
+        {
+            objList.Remove(obj);
+        }
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -76,6 +80,8 @@ namespace Super_BullWhip
                 Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
             }
             new Player(this, 100, 100, 0);
+            Obj swing = new Obj(this, 500, -300, 0, LoadTex("Platform"));
+            swing.type = Obj.PointType.SwingPoint;
             Camera.Target = Global.Player;
             
             //obj.zSpeed = -1f;

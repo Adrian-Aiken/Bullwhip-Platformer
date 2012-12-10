@@ -43,7 +43,7 @@ namespace Super_BullWhip
                 pos += (targpos - pos) * 0.1f * Global.Speed;
             }
             SetShakeSize(40, 1);
-            SetShakeSpeed(0.03f, 1);
+            //SetShakeSpeed(0.03f, 1);
             Shake();
             realpos = pos + shakePos;
         }
@@ -74,7 +74,7 @@ namespace Super_BullWhip
             shakeposx += (-shakeposx) * 0.03f * Global.Speed;
             shakeposy += (-shakeposy) * 0.03f * Global.Speed;
             shakePos = new Vector3(shakeposx, shakeposy, 0) * shakesize;
-            Console.WriteLine(shakespeedtarget);
+            //Console.WriteLine(shakespeedtarget);
         }
         public static void SetShakeSpeed(float target, float targetspeed)
         {
