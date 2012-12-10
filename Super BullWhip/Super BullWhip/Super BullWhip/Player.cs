@@ -56,8 +56,28 @@ namespace Super_BullWhip
                 /*
                 float minDist = 100;
                 for(int index = 0; index < [number of points available]; index++){
-                    
-                */
+                    //check distance    
+                    if([distance] < minDist)
+                    {
+                        minDist = [distance];
+                        Object = [object at index];
+                    }
+                }
+     
+                if([object is swing point])
+                {
+                    swing(object);
+                }
+                else if([object is slingshot point])
+                {
+                    sling(object);
+                }
+                else if([object is pullable block])
+                {
+                    pull(object)
+                }
+                */ 
+                
             }
         }
 
