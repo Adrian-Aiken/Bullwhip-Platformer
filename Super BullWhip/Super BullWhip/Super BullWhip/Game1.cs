@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
 
 namespace Super_BullWhip
 {
@@ -20,6 +22,7 @@ namespace Super_BullWhip
         SpriteBatch spriteBatch;
         List<Obj> objList;
         public Controls controls;
+        public World world;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
