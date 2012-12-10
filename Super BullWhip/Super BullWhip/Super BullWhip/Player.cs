@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using FarseerPhysics.Collision;
+using FarseerPhysics.Collision.Shapes;
 
 namespace Super_BullWhip
 {
@@ -15,12 +17,14 @@ namespace Super_BullWhip
         Obj[] rangePoints;
         float radius = 400;
         float deg = 0;
+        CircleShape c;
         public Player(Game1 Doc, float X, float Y, float Z)
             :base(Doc,X,Y,Z,Doc.LoadTex("Character"))
         {
             Global.Player = this;
             origin.Y = tex.Height;
             scale = 0.5f;
+            c = new CircleShape(100, 1);
             //Point = new Obj(doc
         }
         public override void earlyUpdate()
@@ -71,7 +75,11 @@ namespace Super_BullWhip
                         Point = doc.objList[index];
                     }
                 }
-                if(Point == null) return;
+                if (Point == null)
+                {
+                    deg = 0;
+                    return;
+                }
                 if(Point.type == PointType.SwingPoint)
                 {
                     swing(Point);
@@ -96,8 +104,17 @@ namespace Super_BullWhip
             float dist = MyMath.Distance(pos, obj.pos);
             float xx = MyMath.LengthDirX(deg, dist);
             float yy = MyMath.LengthDirY(deg, dist);
-            x = obj.x + xx;
-            y = obj.y + yy;
+            xSpeed += xx * 0.01f;
+            ySpeed += yy * 0.01f;
+            if (dist > radius)
+            {
+                xSpeed = -xSpeed;
+                ySpeed = -ySpeed;
+            }
+            else
+            {
+                
+            }
             deg++;
         }
 

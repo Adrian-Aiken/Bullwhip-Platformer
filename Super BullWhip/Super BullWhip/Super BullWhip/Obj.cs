@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using FarseerPhysics.Collision.Shapes;
 namespace Super_BullWhip
 {
     public class Obj
@@ -38,6 +39,8 @@ namespace Super_BullWhip
         // type of object
         public enum PointType { SwingPoint, SlingPoint, Pullblock, Normal }
         public PointType type = PointType.Normal;
+        //shape for collision
+        public Shape shape;
         public float x
         {
             get { return pos.X; }
