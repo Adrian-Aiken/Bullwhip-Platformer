@@ -14,7 +14,6 @@ namespace Super_BullWhip
         
         float gravity = 0.5f;
         Obj Point;
-        Obj[] rangePoints;
         float radius = 400;
         float deg = 0;
         CircleShape c;
@@ -92,6 +91,8 @@ namespace Super_BullWhip
                 {
                     pull(Point);
                 }
+
+                Point = null;
             }
         }
 
@@ -104,12 +105,12 @@ namespace Super_BullWhip
             float dist = MyMath.Distance(pos, obj.pos);
             float xx = MyMath.LengthDirX(deg, dist);
             float yy = MyMath.LengthDirY(deg, dist);
-            xSpeed += xx * 0.01f;
-            ySpeed += yy * 0.01f;
+            xSpeed = xx * 0.01f;
+            ySpeed = yy * 0.01f;
             if (dist > radius)
             {
-                xSpeed = -xSpeed;
-                ySpeed = -ySpeed;
+                //xSpeed = -xSpeed;
+                //ySpeed = -ySpeed;
             }
             else
             {
@@ -121,7 +122,16 @@ namespace Super_BullWhip
         //Slingshot
         private void sling(Obj obj)
         {
+            Console.WriteLine("Sling!");
             //take the distance and sling the player double in the right direction
+            float dist = MyMath.Distance(pos, obj.pos);
+            float angle; //the angle between the player and point
+
+            angle = MyMath.angleBetween(pos, obj.pos);
+
+            xSpeed -= MyMath.LengthDirX(angle, dist) * .01f;
+            ySpeed -= MyMath.LengthDirY(angle, dist) * .01f;
+
         }
 
         //Pull an object

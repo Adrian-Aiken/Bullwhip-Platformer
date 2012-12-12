@@ -80,8 +80,13 @@ namespace Super_BullWhip
                 Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
             }
             new Player(this, 100, 100, 0);
+
             Obj swing = new Obj(this, 500, -300, 0, LoadTex("Platform"));
-            swing.type = Obj.PointType.SwingPoint;
+            //swing.type = Obj.PointType.SwingPoint;
+
+            Obj sling = new Obj(this, -500, -300, 0, LoadTex("Platform"));
+            sling.type = Obj.PointType.SlingPoint;
+
             Camera.Target = Global.Player;
             
             //obj.zSpeed = -1f;
