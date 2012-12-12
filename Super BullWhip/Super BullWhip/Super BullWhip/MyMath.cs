@@ -36,11 +36,11 @@ namespace Super_BullWhip
 		}
         public static float LengthDirX(float dir, float dist)
         {
-            return (float)Math.Sin(MathHelper.ToRadians(dir)) * dist;
+            return (float)Math.Cos(MathHelper.ToRadians(dir)) * dist;
         }
         public static float LengthDirY(float dir, float dist)
         {
-            return (float)Math.Cos(MathHelper.ToRadians(dir)) * dist;
+            return (float)Math.Sin(MathHelper.ToRadians(dir)) * dist;
         }
     }
 }

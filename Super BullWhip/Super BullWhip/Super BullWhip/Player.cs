@@ -32,14 +32,20 @@ namespace Super_BullWhip
             ySpeed += gravity;
 
             //friction slowdown
-            if (xSpeed > 0)
+            if (xSpeed > 0.5)
             {
                 xSpeed -= .5f;
             }
-            else if (xSpeed < 0)
+            else if (xSpeed < -0.5)
             {
                 xSpeed += .5f;
             }
+            else
+            {
+                xSpeed = 0;
+            }
+
+            //Landing
             if (y > 0)
             {
                 ySpeed = 0;
@@ -129,8 +135,8 @@ namespace Super_BullWhip
 
             angle = MyMath.angleBetween(pos, obj.pos);
 
-            xSpeed -= MyMath.LengthDirX(angle, dist) * .01f;
-            ySpeed -= MyMath.LengthDirY(angle, dist) * .01f;
+            xSpeed -= MyMath.LengthDirX(angle, dist) * .05f;
+            ySpeed -= MyMath.LengthDirY(angle, dist) * .05f;
 
         }
 
