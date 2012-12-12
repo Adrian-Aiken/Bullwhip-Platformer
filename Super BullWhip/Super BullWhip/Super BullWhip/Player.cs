@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+
 namespace Super_BullWhip
 {
     public class Player:Obj
     {
+        Body body;
         float gravity = 0.5f;
         public Player(Game1 Doc, float X, float Y, float Z)
             :base(Doc,X,Y,Z,Doc.LoadTex("Character"))
@@ -14,6 +19,11 @@ namespace Super_BullWhip
             Global.Player = this;
             origin.Y = tex.Height;
             scale = 0.5f;
+            body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(20), ConvertUnits.ToSimUnits(80), 10f, new Vector2(400, 500));
+            body.BodyType = BodyType.Dynamic;
+            body.Restitution = 0.2f;
+            body.Friction = 0.2f;
+            
         }
         public override void earlyUpdate()
         {

@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using FarseerPhysics.Dynamics;
 
 namespace Super_BullWhip
 {
@@ -22,7 +22,7 @@ namespace Super_BullWhip
         SpriteBatch spriteBatch;
         List<Obj> objList;
         public Controls controls;
-        public World world;
+        private World world;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -75,8 +75,22 @@ namespace Super_BullWhip
             {
                 Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
             }
+
+            //create world for physics with gravity = -10
+            if (world == null)
+            {
+                world = new World(Vector2.UnitY * 10);
+            }
+
             new Player(this, 100, 100, 0);
             Camera.Target = Global.Player;
+
+            //create rigid floor
+            Body floor = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(480), ConvertUnits.ToSimUnits(50), 10f);
+            floor.Position = ConvertUnits.ToSimUnits(240, 775);
+            floor.IsStatic = true;
+            floor.Restitution = 0.2f;
+            floor.Friction = 0.2f;
             
             //obj.zSpeed = -1f;
             // TODO: use this.Content to load your game content here
@@ -186,6 +200,12 @@ namespace Super_BullWhip
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         /// 
+
+        public World getWorld()
+        {
+            return world;
+        }
+
         public void SpriteDraw(Texture2D Tex, Vector2 pos)
         {
             spriteBatch.Draw(Tex, pos, Color.White);
