@@ -46,19 +46,19 @@ namespace Super_BullWhip
                 ySpeed = 0;
                 y = 0;
             }
-            if (doc.controls.getKey(Keys.Space) == Controls.Pressed)
+            if (Controls.GetKey(Keys.Space) == Controls.Pressed)
             {
                 ySpeed = -20;
             }
-            else if (doc.controls.getKey(Keys.Left) == Controls.Held)
+            else if (Controls.GetKey(Keys.Left) == Controls.Held)
             {
                 xSpeed = -10;
             }
-            else if (doc.controls.getKey(Keys.Right) == Controls.Held)
+            else if (Controls.GetKey(Keys.Right) == Controls.Held)
             {
                 xSpeed = 10;
             }
-            else if (doc.controls.getKey(Keys.R) == Controls.Held)
+            else if (Controls.GetKey(Keys.R) == Controls.Held)
             {
                 //This is the Whipping which is context based.
 

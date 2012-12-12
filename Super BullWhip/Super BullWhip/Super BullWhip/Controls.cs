@@ -17,6 +17,7 @@ namespace Super_BullWhip
        public static int Released = 2;
         public static int Held = 1;
         public static int None = 0;
+        public static Controls Instance;
         public MouseState mouse;
         private int mouseLB =0;
         private int mouseLB2 = 0;
@@ -44,6 +45,7 @@ namespace Super_BullWhip
         public int controlMode = 0;
         public Controls()
         {
+            Instance = this;
             addKey(Keys.Z);
             addKey(Keys.X);
             addKey(Keys.Up);
@@ -225,6 +227,10 @@ namespace Super_BullWhip
                 return 0;
             }
         }
+        public static int GetKey(String s)
+        {
+            return Instance.getKey(s);
+        }
         public int getKey(Keys k)
         {
             int ind = Array.IndexOf(keyString, k.ToString());
@@ -239,6 +245,10 @@ namespace Super_BullWhip
                 addKey(k);
                 return getKey(k);
             }
+        }
+        public static int GetKey(Keys s)
+        {
+            return Instance.getKey(s);
         }
         public int getButton(String b)
         {
@@ -255,6 +265,10 @@ namespace Super_BullWhip
                 return 0;
             }
         }
+        public static int GetButton(String b)
+        {
+            return Instance.getButton(b);
+        }
         public int getButton(Buttons b)
         {
             if (controlMode == 0)
@@ -270,10 +284,18 @@ namespace Super_BullWhip
                 return getButton(b);
             }
         }
+        public static int GetButton(Buttons b)
+        {
+            return Instance.getButton(b);
+        }
         public int getKeyTime(String s)
         {
             int ind = Array.IndexOf(keyString, s);
             return stateArray4[ind];
+        }
+        public static int GetKeyTime(String s)
+        {
+            return Instance.getKeyTime(s);
         }
         private void addKey(Keys k)
         {
