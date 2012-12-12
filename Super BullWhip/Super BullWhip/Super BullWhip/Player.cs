@@ -12,14 +12,13 @@ namespace Super_BullWhip
     public class Player:Obj
     {
         Body body;
-        float gravity = 0.5f;
         public Player(Game1 Doc, float X, float Y, float Z)
             :base(Doc,X,Y,Z,Doc.LoadTex("Character"))
         {
             Global.Player = this;
             origin.Y = tex.Height;
             scale = 0.5f;
-            body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(20), ConvertUnits.ToSimUnits(80), 10f, new Vector2(400, 500));
+            body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(20), ConvertUnits.ToSimUnits(80), 10f, new Vector2(x, y));
             body.BodyType = BodyType.Dynamic;
             body.Restitution = 0.2f;
             body.Friction = 0.2f;
@@ -28,33 +27,18 @@ namespace Super_BullWhip
         public override void earlyUpdate()
         {
             base.earlyUpdate();
-            ySpeed += gravity;
 
-            //friction slowdown
-            if (xSpeed > 0)
-            {
-                xSpeed -= .5f;
-            }
-            else if (xSpeed < 0)
-            {
-                xSpeed += .5f;
-            }
-            if (y > 0)
-            {
-                ySpeed = 0;
-                y = 0;
-            }
             if (doc.controls.getKey(Keys.Space) == Controls.Pressed)
             {
-                ySpeed = -20;
+                body.ApplyLinearImpulse(new Vector2(0, 20));
             }
             else if (doc.controls.getKey(Keys.Left) == Controls.Held)
             {
-                xSpeed = -10;
+                body.ApplyLinearImpulse(new Vector2(-5, 0));
             }
             else if (doc.controls.getKey(Keys.Right) == Controls.Held)
             {
-                xSpeed = 10;
+                body.ApplyLinearImpulse(new Vector2(5, 0));
             }
             else if (doc.controls.getKey(Keys.R) == Controls.Pressed)
             {

@@ -4,16 +4,19 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+
 namespace Super_BullWhip
 {
     public class Obj
     {
+        // body for the FarseerPhysics world
+        public Body body;
         // a reference to the game manager class, in case we need to access methods or variables from it
         protected Game1 doc;
         // the object's position in the world, has X, Y, and Z. The Z is mostly useful for placing things in the background so that we can get parallax scrolling.
         public Vector3 pos;
-        // the object's speed, is added to pos in each frame
-        public Vector3 speed = Vector3.Zero;
         // the origin of the sprite, has X and Y, basically the center of where it is drawn, you'll see when you start using it
         protected Vector2 origin;
         // the object's on-screen position, this is relative to the camera, and is used in the Draw method
@@ -28,7 +31,7 @@ namespace Super_BullWhip
         private Vector2 drawScale = Vector2.One;
         // zFactor is basically a number that is calculated based on the difference between the object's z-position and the camera's z-position
         float zFactor = 1;
-        // rotation is self explanitory, just the rotation it's drawn it, depth is just a something extra to use to sort how the objects are drawn when they are at the same z-position
+        // rotation is obvious, depth is just a something extra to use to sort how the objects are drawn when they are at the same z-position
         public float rot, depth = 0;
         // alpha is the object's transparency, 0 is fully transparent, and 1 is fully opaque
         public float alpha = 1;
@@ -50,21 +53,6 @@ namespace Super_BullWhip
             get { return pos.Z; }
             set { pos.Z = value; }
         }
-        public float xSpeed
-        {
-            get { return speed.X; }
-            set { speed.X = value; }
-        }
-        public float ySpeed
-        {
-            get { return speed.Y; }
-            set { speed.Y = value; }
-        }
-        public float zSpeed
-        {
-            get { return speed.Z; }
-            set { speed.Z = value; }
-        }
         public Obj(Game1 Doc, float X, float Y, float Z, Texture2D texture)
         {
             doc = Doc;
@@ -77,7 +65,7 @@ namespace Super_BullWhip
         }
         public virtual void earlyUpdate()
         {
-            pos += speed;
+            
         }
         public virtual void Update()
         {
