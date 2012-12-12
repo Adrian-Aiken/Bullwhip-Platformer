@@ -21,6 +21,7 @@ namespace Super_BullWhip
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public List<Obj> objList;
+        public Player player;
         public Controls controls;
         public World world;
         public Game1()
@@ -66,23 +67,28 @@ namespace Super_BullWhip
             spriteBatch = new SpriteBatch(GraphicsDevice);
             for (int i = 0; i < 2000; i+= 50)
             {
-                Obj obj = new Obj(this, 350, -300, -i, LoadTex("Character"));
+                //Obj obj = new Obj(this, 350, -300, -i, LoadTex("Character"));
                 //obj.zSpeed = -1;
             }
             for (int i = 2000; i > 0; i -= 50)
             {
-                Obj obj = new Obj(this, -600,-300, -i, LoadTex("Character"));
+                //Obj obj = new Obj(this, -600,-300, -i, LoadTex("Character"));
                 //Camera.Target = obj;
-                obj.alpha = 0.5f;
+                //obj.alpha = 0.5f;
             }
             for (int i = -2000; i < 2000; i+=292)
             {
                 Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
             }
-            new Player(this, 100, 100, 0);
+            player = new Player(this, 100, 100, 0);
             Obj swing = new Obj(this, 500, -300, 0, LoadTex("Platform"));
             swing.type = Obj.PointType.SwingPoint;
             Camera.Target = Global.Player;
+
+            Gate gate = new Gate(this, 500, -100, 0);
+            Key key = new Key(this, 300, -100, 0, Color.Red);
+            key.addGate(gate);
+
             
             //obj.zSpeed = -1f;
             // TODO: use this.Content to load your game content here
