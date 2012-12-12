@@ -82,7 +82,7 @@ namespace Super_BullWhip
                 }
                 if (Point == null)
                 {
-                    deg = 0;
+                    //deg = 0;
                     return;
                 }
                 if(Point.type == PointType.SwingPoint)
@@ -109,20 +109,14 @@ namespace Super_BullWhip
             Console.WriteLine("Swing!");
             //take the distance and swing the player
             float dist = MyMath.Distance(pos, obj.pos);
-            float xx = MyMath.LengthDirX(deg, dist);
-            float yy = MyMath.LengthDirY(deg, dist);
-            xSpeed = xx * 0.01f;
-            ySpeed = yy * 0.01f;
-            if (dist > radius)
-            {
-                //xSpeed = -xSpeed;
-                //ySpeed = -ySpeed;
-            }
-            else
-            {
-                
-            }
-            deg++;
+            deg = MyMath.angleBetween(pos, obj.pos) + 1;
+
+
+            //float xx = MyMath.LengthDirX(deg, dist);
+            //float yy = MyMath.LengthDirY(deg, dist);
+            //xSpeed = -(xx * 0.01f);
+            //ySpeed = -(yy * 0.01f);
+            //deg++;
         }
 
         //Slingshot
@@ -135,16 +129,21 @@ namespace Super_BullWhip
 
             angle = MyMath.angleBetween(pos, obj.pos);
 
-            xSpeed -= MyMath.LengthDirX(angle, dist) * .05f;
-            ySpeed -= MyMath.LengthDirY(angle, dist) * .05f;
+            xSpeed -= MyMath.LengthDirX(angle, dist) * .025f;
+            ySpeed -= MyMath.LengthDirY(angle, dist) * .025f;
 
         }
 
         //Pull an object
         private void pull(Obj obj)
         {
+            Console.WriteLine("Pull!");
             //pull the object towards the player one movement.
+            float dist = MyMath.Distance(pos, obj.pos);
+            float angle = MyMath.angleBetween(obj.pos, pos);
 
+            obj.xSpeed -= MyMath.LengthDirX(angle, dist) * .01f;
+            //obj.ySpeed -= MyMath.LengthDirY(angle, dist) * .01f;
         }
     }
 }

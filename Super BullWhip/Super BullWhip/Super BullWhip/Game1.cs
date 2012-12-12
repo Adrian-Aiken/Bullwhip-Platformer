@@ -81,11 +81,17 @@ namespace Super_BullWhip
             }
             new Player(this, 100, 100, 0);
 
+            //Swing point for testing
             Obj swing = new Obj(this, 500, -300, 0, LoadTex("Platform"));
-            //swing.type = Obj.PointType.SwingPoint;
+            swing.type = Obj.PointType.SwingPoint;
 
+            //Sling ponit for testing
             Obj sling = new Obj(this, -500, -300, 0, LoadTex("Platform"));
             sling.type = Obj.PointType.SlingPoint;
+
+            //Pull block for testing
+            Obj pull = new Obj(this, 1000, -100, 0, LoadTex("Platform"));
+            pull.type = Obj.PointType.Pullblock;
 
             Camera.Target = Global.Player;
             

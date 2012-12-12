@@ -84,6 +84,22 @@ namespace Super_BullWhip
         public virtual void earlyUpdate()
         {
             pos += speed;
+
+            //friction slowdown
+            if (xSpeed > 0.5)
+            {
+                xSpeed -= .5f;
+            }
+            else if (xSpeed < -0.5)
+            {
+                xSpeed += .5f;
+            }
+            else
+            {
+                xSpeed = 0;
+            }
+
+
         }
         public virtual void Update()
         {
