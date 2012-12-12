@@ -66,6 +66,9 @@
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="mscorlib" />
+    <Reference Include="RealmFactoryCore">
+      <HintPath>.\RealmFactoryCore.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -74,7 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Floor.cs" />
     <Compile Include="Controls.cs" />
+    <Compile Include="LevelLoader.cs" />
     <Compile Include="MyMath.cs" />
     <Compile Include="Obj.cs" />
     <Compile Include="Player.cs" />

@@ -41,6 +41,7 @@ namespace Super_BullWhip
             {
                 targpos += (Target.pos - targpos) * 0.1f * Global.Speed;
                 pos += (targpos - pos) * 0.1f * Global.Speed;
+                //pos.Z = 1000;
             }
             SetShakeSize(40, 1);
             //SetShakeSpeed(0.03f, 1);

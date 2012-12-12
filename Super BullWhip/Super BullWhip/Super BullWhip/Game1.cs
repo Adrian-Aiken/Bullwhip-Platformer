@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using Starbound.RealmFactoryCore;
+using Starbound;
 
 namespace Super_BullWhip
 {
@@ -23,9 +25,11 @@ namespace Super_BullWhip
         public List<Obj> objList;
         public Controls controls;
         public World world;
+        public static Game1 Instance;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            Instance = this;
             Content.RootDirectory = "Content";
         }
 
@@ -49,7 +53,6 @@ namespace Super_BullWhip
         public  void AddObj(Obj obj)
         {
             objList.Add(obj);
-            Console.Write("Obj Added");
         }
         public void RemoveObj(Obj obj)
         {
@@ -83,7 +86,7 @@ namespace Super_BullWhip
             Obj swing = new Obj(this, 500, -300, 0, LoadTex("Platform"));
             swing.type = Obj.PointType.SwingPoint;
             Camera.Target = Global.Player;
-            
+            LevelLoader.Load("Level 3");
             //obj.zSpeed = -1f;
             // TODO: use this.Content to load your game content here
         }
