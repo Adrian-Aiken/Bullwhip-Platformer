@@ -111,6 +111,12 @@ namespace Super_BullWhip
             float dist = MyMath.Distance(pos, obj.pos);
             deg = MyMath.angleBetween(pos, obj.pos) + 1;
 
+            ySpeed = 0;
+            xSpeed = 0;
+
+            x = MyMath.LengthDirX(deg, dist) + obj.x;
+            y = MyMath.LengthDirY(deg, dist) + obj.y;
+
 
             //float xx = MyMath.LengthDirX(deg, dist);
             //float yy = MyMath.LengthDirY(deg, dist);
