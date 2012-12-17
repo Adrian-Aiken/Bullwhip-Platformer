@@ -20,7 +20,7 @@ namespace Super_BullWhip
         // the object's on-screen position, this is relative to the camera, and is used in the Draw method
         Vector2 screenPos = Vector2.Zero;
         // the object's sprite (called a texture), it's static for now, will add a separate class for animated objects later
-        protected Texture2D tex;
+        public Texture2D tex;
         // the object's scale, with X and Y
         public Vector2 Scale = Vector2.One;
         // a multiplyer for the object's scale
@@ -81,6 +81,35 @@ namespace Super_BullWhip
             // each new object is added to the Game1 class' list of objects
             doc.AddObj(this);
         }
+
+        public virtual bool testCollide(Obj obj){
+            if (this == obj) return false;
+
+            float w = tex.Width * scale;
+            float h = tex.Height * scale;
+
+            float ow = obj.tex.Width * obj.scale;
+            float oh = obj.tex.Height * obj.scale;
+
+
+            if (    ( (pos.X) < (obj.pos.X + ow) ) &&
+                    ( (pos.X +  w) > (obj.pos.X) ) &&
+                    ( (pos.Y) < (obj.pos.Y + oh) ) &&
+                    ( (pos.Y + h) > (obj.pos.Y ) ) )
+            {
+                Console.WriteLine("Collision: " + pos + " (w:" + tex.Width + ", h:" + tex.Height
+                    + ") WITH " + obj.pos + " (w:" + obj.tex.Width + ", h:" + tex.Height + ")");
+                return true;
+            }
+
+            return false;
+        }
+
+        public virtual void doCollide(Obj obj)
+        {
+            // Does nothing - to be reimplemented in other classes
+        }
+
         public virtual void earlyUpdate()
         {
             pos += speed;

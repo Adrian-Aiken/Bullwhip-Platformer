@@ -45,6 +45,15 @@ namespace Super_BullWhip
                 xSpeed = 0;
             }
 
+            foreach (Obj o in doc.objList)
+            {
+                if (testCollide(o))
+                {
+                    doCollide(o);
+                    Console.WriteLine("PLAYER COLLIDE");
+                }
+            }
+
             //Landing
             if (y > 0)
             {
@@ -99,6 +108,22 @@ namespace Super_BullWhip
                 }
 
                 Point = null;
+            }
+        }
+
+        private new void doCollide(Obj obj)
+        {
+            float w = tex.Width * scale;
+            float h = tex.Height * scale;
+
+            float ow = obj.tex.Width * obj.scale;
+            float oh = obj.tex.Height * obj.scale;
+
+            // player falling down onto platforms
+            if ((pos.Y - h) <= (obj.pos.Y))
+            {
+                pos.Y = obj.pos.Y + h;
+                speed.Y = 0;
             }
         }
 
