@@ -16,6 +16,7 @@ namespace Super_BullWhip
         Obj Point;
         float radius = 400;
         float deg = 0;
+        int increment = 3;
         CircleShape c;
         public Player(Game1 Doc, float X, float Y, float Z)
             :base(Doc,X,Y,Z,Doc.LoadTex("Character"))
@@ -108,14 +109,51 @@ namespace Super_BullWhip
         {
             Console.WriteLine("Swing!");
             //take the distance and swing the player
+            float velocity; //speed of travel
+            float dir; //direction of travel
+            float tensionX;
+            float tensionY;
+            Vector3 nextPoint;
             float dist = MyMath.Distance(pos, obj.pos);
-            deg = MyMath.angleBetween(pos, obj.pos) + 1;
+            deg = MyMath.angleBetween(pos, obj.pos) + increment;
+            Console.WriteLine("deg = " + deg);
 
-            ySpeed = 0;
-            xSpeed = 0;
+            //only start swinging once in swingable range
+            if (deg > 0)
+            {
 
-            x = MyMath.LengthDirX(deg, dist) + obj.x;
-            y = MyMath.LengthDirY(deg, dist) + obj.y;
+                if (((deg < 20) && (increment > 0)) || ((deg > 160) && (increment < 0)))
+                {
+                    increment *= -1;
+                }
+
+                //get the next point in sequence
+                nextPoint.X = MyMath.LengthDirX(deg, dist) + obj.x;
+                nextPoint.Y = MyMath.LengthDirY(deg, dist) + obj.y;
+                nextPoint.Z = z;
+
+                //get the velocity and direction of velocity between the two points.
+                velocity = MyMath.Distance(pos, nextPoint);
+                dir = deg = MyMath.angleBetween(pos, nextPoint);
+
+
+                xSpeed = MyMath.LengthDirX(dir, velocity) * .5f;
+                ySpeed = MyMath.LengthDirY(dir, velocity) * .5f;
+
+                //tension
+                tensionX = MyMath.LengthDirX(deg, velocity);
+                tensionY = MyMath.LengthDirY(deg, velocity);
+
+                xSpeed -= tensionX * (dist / radius) + .1f;
+                ySpeed -= tensionY * (dist / radius) + .1f;
+
+                
+            }
+
+            
+
+            Console.WriteLine("dist tension: " + (dist / radius));
+
 
 
             //float xx = MyMath.LengthDirX(deg, dist);

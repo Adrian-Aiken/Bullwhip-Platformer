@@ -82,7 +82,7 @@ namespace Super_BullWhip
             new Player(this, 100, 100, 0);
 
             //Swing point for testing
-            Obj swing = new Obj(this, 500, -300, 0, LoadTex("Platform"));
+            Obj swing = new Obj(this, 500, -750, 0, LoadTex("Platform"));
             swing.type = Obj.PointType.SwingPoint;
 
             //Sling ponit for testing
