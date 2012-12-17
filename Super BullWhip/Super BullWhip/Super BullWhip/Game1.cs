@@ -46,7 +46,7 @@ namespace Super_BullWhip
             graphics.ApplyChanges();
             base.Initialize();
         }
-        public  void AddObj(Obj obj)
+        public void AddObj(Obj obj)
         {
             objList.Add(obj);
             Console.Write("Obj Added");
@@ -79,19 +79,17 @@ namespace Super_BullWhip
             //create world for physics with gravity = -10
             if (world == null)
             {
-                world = new World(Vector2.UnitY * 10);
+                world = new World(new Vector2(0, 10));
             }
 
-            new Player(this, 100, 100, 0);
+            new Player(this, 100, -300, 0);
+            
             Camera.Target = Global.Player;
 
             //create rigid floor
-            Body floor = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(480), ConvertUnits.ToSimUnits(50), 10f);
-            floor.Position = ConvertUnits.ToSimUnits(240, 775);
-            floor.IsStatic = true;
-            floor.Restitution = 0.2f;
-            floor.Friction = 0.2f;
-            
+            Wall floor = new Wall(this, Global.Width / 2, 200, 0, 1280, 20, true);
+            floor.body.Position = ConvertUnits.ToSimUnits(240, 0);
+
             //obj.zSpeed = -1f;
             // TODO: use this.Content to load your game content here
         }
@@ -137,6 +135,7 @@ namespace Super_BullWhip
                 objList[i].lateUpdate();
             }
             sortArray();
+            world.Step((float)gameTime.ElapsedGameTime.TotalMilliseconds *0.001f);
             base.Update(gameTime);
         }
         private void sortArray()
@@ -194,18 +193,18 @@ namespace Super_BullWhip
 
 
         }
-        
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        /// 
 
         public World getWorld()
         {
             return world;
         }
 
+
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /// 
         public void SpriteDraw(Texture2D Tex, Vector2 pos)
         {
             spriteBatch.Draw(Tex, pos, Color.White);

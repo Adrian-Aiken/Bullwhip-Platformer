@@ -18,8 +18,6 @@ namespace Super_BullWhip
         // the object's position in the world, has X, Y, and Z. The Z is mostly useful for placing things in the background so that we can get parallax scrolling.
         public Vector3 pos;
         // the origin of the sprite, has X and Y, basically the center of where it is drawn, you'll see when you start using it
-        protected Vector2 origin;
-        // the object's on-screen position, this is relative to the camera, and is used in the Draw method
         Vector2 screenPos = Vector2.Zero;
         // the object's sprite (called a texture), it's static for now, will add a separate class for animated objects later
         protected Texture2D tex;
@@ -58,8 +56,6 @@ namespace Super_BullWhip
             doc = Doc;
             tex = texture;
             pos = new Vector3(X, Y, Z);
-            //sets the origin to the center of the texture by default
-            origin = new Vector2(texture.Width / 2, texture.Height / 2);
             // each new object is added to the Game1 class' list of objects
             doc.AddObj(this);
         }
@@ -85,7 +81,7 @@ namespace Super_BullWhip
         public void Draw()
         {
             // draws the object using its texture, screen position, rotation and scale
-            doc.SpriteDraw(tex, screenPos, color * alpha, origin, rot, drawScale * scale);
+            doc.SpriteDraw(tex, screenPos, color * alpha, Global.Player.body.Position, rot, drawScale * scale);
         }
     }
 }

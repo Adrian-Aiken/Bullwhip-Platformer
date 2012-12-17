@@ -11,34 +11,36 @@ namespace Super_BullWhip
 {
     public class Player:Obj
     {
-        Body body;
         public Player(Game1 Doc, float X, float Y, float Z)
             :base(Doc,X,Y,Z,Doc.LoadTex("Character"))
         {
             Global.Player = this;
-            origin.Y = tex.Height;
             scale = 0.5f;
             body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(20), ConvertUnits.ToSimUnits(80), 10f, new Vector2(x, y));
             body.BodyType = BodyType.Dynamic;
             body.Restitution = 0.2f;
             body.Friction = 0.2f;
+            body.FixedRotation = true;
             
         }
         public override void earlyUpdate()
         {
             base.earlyUpdate();
 
-            if (doc.controls.getKey(Keys.Space) == Controls.Pressed)
+            x = body.Position.X;
+            y = body.Position.Y;
+
+            if (doc.controls.getKey(Keys.Space) == Controls.Held)
             {
-                body.ApplyLinearImpulse(new Vector2(0, 20));
+                body.ApplyLinearImpulse(new Vector2(0, -25));
             }
             else if (doc.controls.getKey(Keys.Left) == Controls.Held)
             {
-                body.ApplyLinearImpulse(new Vector2(-5, 0));
+                body.ApplyLinearImpulse(new Vector2(-100, 0));
             }
             else if (doc.controls.getKey(Keys.Right) == Controls.Held)
             {
-                body.ApplyLinearImpulse(new Vector2(5, 0));
+                body.ApplyLinearImpulse(new Vector2(100, 0));
             }
             else if (doc.controls.getKey(Keys.R) == Controls.Pressed)
             {

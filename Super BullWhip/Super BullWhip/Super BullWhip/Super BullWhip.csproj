@@ -74,7 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
-    <Compile Include="Body3D.cs" />
+    <Compile Include="Wall.cs" />
     <Compile Include="ConvertUnits.cs" />
     <Compile Include="Controls.cs" />
     <Compile Include="Obj.cs" />
