@@ -6,41 +6,49 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using FarseerPhysics.Collision;
+using FarseerPhysics.Dynamics.Contacts;
 
 namespace Super_BullWhip
 {
     public class Player:Obj
     {
+        float topspeed = 5;
         public Player(Game1 Doc, float X, float Y, float Z)
             :base(Doc,X,Y,Z,Doc.LoadTex("Character"))
         {
             Global.Player = this;
             scale = 0.5f;
-            body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(20), ConvertUnits.ToSimUnits(80), 10f, new Vector2(x, y));
+            /*body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(tex.Width * scale), ConvertUnits.ToSimUnits(tex.Height * scale), 10f, new Vector2(ConvertUnits.ToSimUnits(x), ConvertUnits.ToSimUnits(y)));
             body.BodyType = BodyType.Dynamic;
             body.Restitution = 0.2f;
-            body.Friction = 0.2f;
-            body.FixedRotation = true;
-            
+            //body.Friction = 0.2f;
+            body.FixedRotation = true;*/
+            createRecBody(10, 1f, true);
         }
         public override void earlyUpdate()
         {
             base.earlyUpdate();
-
-            x = body.Position.X;
-            y = body.Position.Y;
-
-            if (doc.controls.getKey(Keys.Space) == Controls.Held)
+            if (doc.controls.getKey(Keys.Space) == Controls.Pressed)
             {
-                body.ApplyLinearImpulse(new Vector2(0, -25));
+                
+                ContactEdge c = body.ContactList;
+                if (c != null)
+                {
+                    body.ApplyLinearImpulse(new Vector2(0, -150));
+                    Console.WriteLine(c.Contact.IsTouching());
+                }
             }
             else if (doc.controls.getKey(Keys.Left) == Controls.Held)
             {
-                body.ApplyLinearImpulse(new Vector2(-100, 0));
+                if (body.GetLinearVelocityFromLocalPoint(new Vector2(x, y)).X > -topspeed)
+                body.ApplyLinearImpulse(new Vector2(-5f, 0));
+                //Console.WriteLine(body.GetLinearVelocityFromLocalPoint(new Vector2(x, y)));
             }
             else if (doc.controls.getKey(Keys.Right) == Controls.Held)
             {
-                body.ApplyLinearImpulse(new Vector2(100, 0));
+                if (body.GetLinearVelocityFromLocalPoint(new Vector2(x, y)).X < topspeed)
+                body.ApplyLinearImpulse(new Vector2(5f, 0));
             }
             else if (doc.controls.getKey(Keys.R) == Controls.Pressed)
             {

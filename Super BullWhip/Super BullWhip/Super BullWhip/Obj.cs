@@ -36,6 +36,7 @@ namespace Super_BullWhip
         // basically an overlay color for the object, so like, for the whipspace portals, we would only need one sprite, and then change the color of its object
         public Color color = Color.White;
         // getters and setters for the position, speed, etc, so that instead of having to type obj.pos.x, you can just type obj.x
+        protected Vector2 or;
         public float x
         {
             get { return pos.X; }
@@ -58,10 +59,12 @@ namespace Super_BullWhip
             pos = new Vector3(X, Y, Z);
             // each new object is added to the Game1 class' list of objects
             doc.AddObj(this);
+            or = new Vector2(tex.Width / 2, tex.Height / 2);
         }
         public virtual void earlyUpdate()
         {
-            
+            if (body != null)
+                updateBody();
         }
         public virtual void Update()
         {
@@ -78,10 +81,23 @@ namespace Super_BullWhip
             screenPos.X = (Global.Width / 2f) + ((pos.X - Camera.x) * zFactor);
             screenPos.Y = (Global.Height / 2f) + ((pos.Y - Camera.y) * zFactor);
         }
+        protected virtual void updateBody()
+        {
+            x = ConvertUnits.ToDisplayUnits(body.Position.X);
+            y = ConvertUnits.ToDisplayUnits(body.Position.Y);
+        }
+        protected virtual void createRecBody(float density, float friction, bool fixedRotation)
+        {
+            body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(tex.Width * scale * Scale.X), ConvertUnits.ToSimUnits(tex.Height * scale * Scale.Y), density, new Vector2(ConvertUnits.ToSimUnits(x), ConvertUnits.ToSimUnits(y)));
+            body.BodyType = BodyType.Dynamic;
+            body.Restitution = 0.2f;
+            body.Friction = friction;
+            body.FixedRotation = fixedRotation;
+        }
         public void Draw()
         {
             // draws the object using its texture, screen position, rotation and scale
-            doc.SpriteDraw(tex, screenPos, color * alpha, Global.Player.body.Position, rot, drawScale * scale);
+            doc.SpriteDraw(tex, screenPos, color * alpha, or, rot, drawScale * scale);
         }
     }
 }

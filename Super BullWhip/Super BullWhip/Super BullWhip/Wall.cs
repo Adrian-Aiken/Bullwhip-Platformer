@@ -14,16 +14,15 @@ namespace Super_BullWhip
         public Wall(Game1 Doc, float X, float Y, float Z, int width, int height, bool isFloor)
             : base(Doc, X, Y, Z, Doc.LoadTex("Platform"))
         {
-            scale = 0.5f;
-            body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(width), ConvertUnits.ToSimUnits(height), 10f, new Vector2(x, y));
+            scale = 1f;
+            body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(tex.Width), ConvertUnits.ToSimUnits(tex.Height), 1f, new Vector2( ConvertUnits.ToSimUnits(x),  ConvertUnits.ToSimUnits(y)));
             body.IsStatic = true;
             body.Restitution = 0.2f;
             if (isFloor)
             {
-                body.Friction = 0.2f;
+                body.Friction = 0.5f;
             }
             body.FixedRotation = true;
-
         }
        /** public override void earlyUpdate()
         {

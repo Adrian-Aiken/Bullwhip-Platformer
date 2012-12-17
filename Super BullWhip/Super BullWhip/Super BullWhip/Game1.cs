@@ -27,6 +27,7 @@ namespace Super_BullWhip
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1f / 60f);
         }
 
         /// <summary>
@@ -49,7 +50,6 @@ namespace Super_BullWhip
         public void AddObj(Obj obj)
         {
             objList.Add(obj);
-            Console.Write("Obj Added");
         }
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -58,6 +58,10 @@ namespace Super_BullWhip
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            if (world == null)
+            {
+                world = new World(new Vector2(0, 10));
+            }
             Camera.init();
             spriteBatch = new SpriteBatch(GraphicsDevice);
             for (int i = 0; i < 2000; i+= 50)
@@ -73,22 +77,20 @@ namespace Super_BullWhip
             }
             for (int i = -2000; i < 2000; i+=292)
             {
-                Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
+                //Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
+                Wall floor = new Wall(this, i, 50, 0, 292, 275, true);
             }
 
             //create world for physics with gravity = -10
-            if (world == null)
-            {
-                world = new World(new Vector2(0, 10));
-            }
+            
 
-            new Player(this, 100, -300, 0);
+            new Player(this, 100, -1000, 0);
             
             Camera.Target = Global.Player;
 
             //create rigid floor
-            Wall floor = new Wall(this, Global.Width / 2, 200, 0, 1280, 20, true);
-            floor.body.Position = ConvertUnits.ToSimUnits(240, 0);
+            //Wall floor = new Wall(this, 100, 0, 0, 1280, 20, true);
+            ///floor.body.Position = ConvertUnits.ToSimUnits(240, 0);
 
             //obj.zSpeed = -1f;
             // TODO: use this.Content to load your game content here
@@ -135,7 +137,9 @@ namespace Super_BullWhip
                 objList[i].lateUpdate();
             }
             sortArray();
-            world.Step((float)gameTime.ElapsedGameTime.TotalMilliseconds *0.001f);
+            world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds *0.001f, (1f/30f)));
+            //world.Step((float)gameTime.ElapsedGameTime.TotalMilliseconds * 90f);
+            //world.Step(100f);
             base.Update(gameTime);
         }
         private void sortArray()
