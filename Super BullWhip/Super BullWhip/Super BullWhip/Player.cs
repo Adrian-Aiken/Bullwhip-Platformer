@@ -111,6 +111,7 @@ namespace Super_BullWhip
             //take the distance and swing the player
             float velocity; //speed of travel
             float dir; //direction of travel
+            float tensionAll;
             float tensionX;
             float tensionY;
             Vector3 nextPoint;
@@ -121,7 +122,7 @@ namespace Super_BullWhip
             //only start swinging once in swingable range
             if (deg > 0)
             {
-
+                //Console.WriteLine("increment: " + increment);
                 if (((deg < 20) && (increment > 0)) || ((deg > 160) && (increment < 0)))
                 {
                     increment *= -1;
@@ -137,22 +138,25 @@ namespace Super_BullWhip
                 dir = deg = MyMath.angleBetween(pos, nextPoint);
 
 
-                xSpeed = MyMath.LengthDirX(dir, velocity) * .5f;
-                ySpeed = MyMath.LengthDirY(dir, velocity) * .5f;
-
-                //tension
-                tensionX = MyMath.LengthDirX(deg, velocity);
-                tensionY = MyMath.LengthDirY(deg, velocity);
-
-                xSpeed -= tensionX * (dist / radius) + .1f;
-                ySpeed -= tensionY * (dist / radius) + .1f;
+                xSpeed = MyMath.LengthDirX(dir, velocity);
+                ySpeed = MyMath.LengthDirY(dir, velocity);
 
                 
+                //tension
+                //First, find the amount of movement away from the swing point
+                tensionAll = velocity * (float)Math.Sin(MathHelper.ToRadians(dir - (deg - increment)));
+                Console.WriteLine("Tension: " + tensionAll);
+
+                tensionX = MyMath.LengthDirX(deg, tensionAll);
+                tensionY = MyMath.LengthDirY(deg, tensionAll);
+
+                xSpeed -= tensionX; // *((dist / radius) + .2f);
+                ySpeed -= tensionY; // *((dist / radius) + .2f);
+                 
+                //Console.WriteLine("dist tension: " + (dist / radius));
+                
+
             }
-
-            
-
-            Console.WriteLine("dist tension: " + (dist / radius));
 
 
 
