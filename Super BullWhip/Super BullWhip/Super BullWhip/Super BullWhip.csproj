@@ -74,6 +74,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Wall.cs" />
+    <Compile Include="ConvertUnits.cs" />
     <Compile Include="Controls.cs" />
     <Compile Include="Gate.cs" />
     <Compile Include="Key.cs" />

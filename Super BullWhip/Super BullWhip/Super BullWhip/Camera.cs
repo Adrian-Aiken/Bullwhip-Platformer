@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using FarseerPhysics.Dynamics;
 namespace Super_BullWhip
 {
     public static class Camera
@@ -44,7 +45,10 @@ namespace Super_BullWhip
             }
             SetShakeSize(40, 1);
             //SetShakeSpeed(0.03f, 1);
+            //SetShakeSize(40, 1);
+            //SetShakeSpeed(0.01f, 1);
             Shake();
+            pos.Z = 100;
             realpos = pos + shakePos;
         }
         private static void Shake()

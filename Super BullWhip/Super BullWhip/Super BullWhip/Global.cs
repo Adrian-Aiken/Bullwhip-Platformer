@@ -9,7 +9,7 @@ namespace Super_BullWhip
     {
         public static int Width = 1280;
         public static int Height = 720;
-        public static float Speed = 1;
+        public static float Speed = 1f;
         public static Player Player;
     }
 }

@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using FarseerPhysics.Dynamics;
 
 namespace Super_BullWhip
 {
@@ -23,11 +23,16 @@ namespace Super_BullWhip
         public List<Obj> objList;
         public Player player;
         public Controls controls;
-        public World world;
+        private World world;
+        public World World
+        {
+            get { return world; }
+        }
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1f / 60f);
         }
 
         /// <summary>
@@ -47,10 +52,9 @@ namespace Super_BullWhip
             graphics.ApplyChanges();
             base.Initialize();
         }
-        public  void AddObj(Obj obj)
+        public void AddObj(Obj obj)
         {
             objList.Add(obj);
-            Console.Write("Obj Added");
         }
         public void RemoveObj(Obj obj)
         {
@@ -63,6 +67,10 @@ namespace Super_BullWhip
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            if (world == null)
+            {
+                world = new World(new Vector2(0, 10));
+            }
             Camera.init();
             spriteBatch = new SpriteBatch(GraphicsDevice);
             for (int i = 0; i < 2000; i+= 50)
@@ -76,9 +84,10 @@ namespace Super_BullWhip
                 //Camera.Target = obj;
                 //obj.alpha = 0.5f;
             }
-            for (int i = -2000; i < 2000; i+=292)
+            for (int i = -4000; i < 4000; i+=291)
             {
-                Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
+                //Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
+                Wall floor = new Wall(this, i, 50, 0, 292, 275);
             }
             player = new Player(this, 100, 100, 0);
             Obj swing = new Obj(this, 500, -300, 0, LoadTex("Platform"));
@@ -89,7 +98,16 @@ namespace Super_BullWhip
             Key key = new Key(this, 300, -100, 0, Color.Red);
             key.addGate(gate);
 
+            //create world for physics with gravity = -10
             
+            new Player(this, 100, -600, 0);
+            
+            Camera.Target = Global.Player;
+
+            //create rigid floor
+            //Wall floor = new Wall(this, 100, 0, 0, 1280, 20, true);
+            ///floor.body.Position = ConvertUnits.ToSimUnits(240, 0);
+
             //obj.zSpeed = -1f;
             // TODO: use this.Content to load your game content here
         }
@@ -135,6 +153,9 @@ namespace Super_BullWhip
                 objList[i].lateUpdate();
             }
             sortArray();
+            world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds *0.001f, (1f/30f))*Global.Speed);
+            //world.Step((float)gameTime.ElapsedGameTime.TotalMilliseconds * 90f);
+            //world.Step(100f);
             base.Update(gameTime);
         }
         private void sortArray()
@@ -192,7 +213,13 @@ namespace Super_BullWhip
 
 
         }
-        
+
+        public World getWorld()
+        {
+            return world;
+        }
+
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
