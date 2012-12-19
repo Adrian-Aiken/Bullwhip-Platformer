@@ -44,9 +44,9 @@ namespace Super_BullWhip
                 pos += (targpos - pos) * 0.1f * Global.Speed;
             }
             //SetShakeSize(40, 1);
-            //SetShakeSpeed(0.03f, 1);
+            //SetShakeSpeed(0.01f, 1);
             Shake();
-            //pos.Z = 100;
+            pos.Z = 100;
             realpos = pos + shakePos;
         }
         private static void Shake()

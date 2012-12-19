@@ -37,6 +37,7 @@ namespace Super_BullWhip
         public Color color = Color.White;
         // getters and setters for the position, speed, etc, so that instead of having to type obj.pos.x, you can just type obj.x
         protected Vector2 or;
+        public bool isFloor = false;
         public float x
         {
             get { return pos.X; }
@@ -59,7 +60,7 @@ namespace Super_BullWhip
             pos = new Vector3(X, Y, Z);
             // each new object is added to the Game1 class' list of objects
             doc.AddObj(this);
-            or = new Vector2(tex.Width / 2, tex.Height / 2);
+            or = new Vector2((float)tex.Width / 2f, (float)tex.Height / 2);
         }
         public virtual void earlyUpdate()
         {
@@ -85,19 +86,30 @@ namespace Super_BullWhip
         {
             x = ConvertUnits.ToDisplayUnits(body.Position.X);
             y = ConvertUnits.ToDisplayUnits(body.Position.Y);
+            rot = MathHelper.ToDegrees(body.Rotation);
+            rot = body.Rotation;
         }
-        protected virtual void createRecBody(float density, float friction, bool fixedRotation)
+        public virtual void createRecBody(float density, float bounce, float friction, bool fixedRotation, bool isStatic)
         {
             body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(tex.Width * scale * Scale.X), ConvertUnits.ToSimUnits(tex.Height * scale * Scale.Y), density, new Vector2(ConvertUnits.ToSimUnits(x), ConvertUnits.ToSimUnits(y)));
             body.BodyType = BodyType.Dynamic;
-            body.Restitution = 0.2f;
+            body.Restitution = bounce;
             body.Friction = friction;
             body.FixedRotation = fixedRotation;
+            body.IsStatic = isStatic;
+        }
+        protected virtual void destroyBody()
+        {
+            if (body != null)
+            {
+                body.Dispose();
+            }
+            body = null;
         }
         public void Draw()
         {
             // draws the object using its texture, screen position, rotation and scale
-            doc.SpriteDraw(tex, screenPos, color * alpha, or, rot, drawScale * scale);
+            doc.SpriteDraw(tex, screenPos, color * alpha, or, rot, drawScale * scale * Scale);
         }
     }
 }

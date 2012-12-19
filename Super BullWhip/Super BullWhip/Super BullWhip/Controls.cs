@@ -42,8 +42,10 @@ namespace Super_BullWhip
         float[] vibrationSpeedArray = new float[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         int vibrationIndex = 0;
         public int controlMode = 0;
+        private static Controls instance;
         public Controls()
         {
+            instance = this;
             addKey(Keys.Z);
             addKey(Keys.X);
             addKey(Keys.Up);
@@ -82,6 +84,10 @@ namespace Super_BullWhip
             addButton(Buttons.DPadDown);
             addButton(Buttons.DPadLeft);
             addButton(Buttons.DPadRight);
+            addButton(Buttons.RightShoulder);
+            addButton(Buttons.LeftStick);
+            addButton(Buttons.RightStick);
+            addButton(Buttons.LeftShoulder);
         }
         public void update()
         {
@@ -239,6 +245,14 @@ namespace Super_BullWhip
                 addKey(k);
                 return getKey(k);
             }
+        }
+        public static int GetKey(Keys k)
+        {
+            return instance.getKey(k);
+        }
+        public static int GetButton(Buttons b)
+        {
+            return instance.getButton(b);
         }
         public int getButton(String b)
         {

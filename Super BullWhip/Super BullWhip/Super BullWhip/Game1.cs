@@ -23,6 +23,10 @@ namespace Super_BullWhip
         List<Obj> objList;
         public Controls controls;
         private World world;
+        public World World
+        {
+            get { return world; }
+        }
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -75,16 +79,16 @@ namespace Super_BullWhip
                 //Camera.Target = obj;
                 obj.alpha = 0.5f;
             }
-            for (int i = -2000; i < 2000; i+=292)
+            for (int i = -4000; i < 4000; i+=291)
             {
                 //Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
-                Wall floor = new Wall(this, i, 50, 0, 292, 275, true);
+                Wall floor = new Wall(this, i, 50, 0, 292, 275);
             }
 
             //create world for physics with gravity = -10
             
-
-            new Player(this, 100, -1000, 0);
+            
+            new Player(this, 100, -600, 0);
             
             Camera.Target = Global.Player;
 
@@ -137,7 +141,7 @@ namespace Super_BullWhip
                 objList[i].lateUpdate();
             }
             sortArray();
-            world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds *0.001f, (1f/30f)));
+            world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds *0.001f, (1f/30f))*Global.Speed);
             //world.Step((float)gameTime.ElapsedGameTime.TotalMilliseconds * 90f);
             //world.Step(100f);
             base.Update(gameTime);
