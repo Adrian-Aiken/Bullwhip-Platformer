@@ -16,14 +16,14 @@ namespace Super_BullWhip
         {
             scale = 1f;
             isFloor = true;
-            /*body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(tex.Width), ConvertUnits.ToSimUnits(tex.Height), 1f, new Vector2( ConvertUnits.ToSimUnits(x),  ConvertUnits.ToSimUnits(y)));
-            body.IsStatic = true;
-            body.Restitution = 0.2f;
-            if (isFloor)
-            {
-                body.Friction = 0.5f;
-            }
-            body.FixedRotation = true;*/
+            //body = BodyFactory.CreateRectangle(doc.getWorld(), ConvertUnits.ToSimUnits(tex.Width), ConvertUnits.ToSimUnits(tex.Height), 1f, new Vector2( ConvertUnits.ToSimUnits(x),  ConvertUnits.ToSimUnits(y)));
+            //body.IsStatic = true;
+            //body.Restitution = 0.2f;
+            //if (isFloor)
+            //{
+            //    body.Friction = 0.5f;
+            //}
+            //body.FixedRotation = true;
             createRecBody(1,0, 0.5f, false, true);
         }
     }
