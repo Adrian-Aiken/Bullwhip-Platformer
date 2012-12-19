@@ -26,7 +26,7 @@ namespace Super_BullWhip
 			return test3;
 			else return test1;
 		}
-        public static float angleBetween(Vector3 v1, Vector3 v2)
+        public static float AngleBetween(Vector3 v1, Vector3 v2)
 		{
 			//float ang1, ang2;
 			//ang1 = (float)Math.Atan2(v1.Y, v1.X);

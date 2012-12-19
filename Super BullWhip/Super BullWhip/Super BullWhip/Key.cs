@@ -30,7 +30,7 @@ namespace Super_BullWhip
 
         public override void Update()
         {
-            if ( (Math.Abs(doc.player.x - x) < 50) && (Math.Abs(doc.player.y - y) < 50) )
+            if ( (Math.Abs(Global.Player.x - x) < 50) && (Math.Abs(Global.Player.y - y) < 50) )
             {
                 foreach (Gate g in gates)
                     g.openGate();

@@ -25,6 +25,8 @@ namespace Super_BullWhip
         DistanceJoint whipJoint;
         Obj[] whip;
         Obj whipPoint;
+        bool neg = false;
+        bool swinging = false;
         public Player(Game1 Doc, float X, float Y, float Z)
             :base(Doc,X,Y,Z,Doc.LoadTex("Character"))
         {
@@ -32,10 +34,11 @@ namespace Super_BullWhip
             scale = 0.5f;
             //Point = new Obj(doc
             createRecBody(10, 0, 1f, true,false);
-            obj = new Obj(doc, x + 400, y - 400, z, doc.LoadTex("Square"));
+            obj = new Obj(doc, x + 200, y + 200, z, doc.LoadTex("Square"));
             obj.createRecBody(1,0.5f,0.3f, true, true);
-            obj2 = new Obj(doc, x + 800, y - 400, z, doc.LoadTex("Square"));
+            obj2 = new Obj(doc, x + 800, y + 400, z, doc.LoadTex("Square"));
             obj2.createRecBody(1, 0.5f, 0.3f, true, true);
+            obj.type = obj2.type = Obj.PointType.SwingPoint;
             //body.JointList = new JointEdge();
             //JointFactory.CreateDistanceJoint(doc.getWorld(), body, obj.body, /*ConvertUnits.ToSimUnits(pos.ToVector2() + new Vector2(0,400))*/body.Position, obj.body.Position);
             //r = JointFactory.CreateRevoluteJoint(doc.World, body, obj.body, obj.body.Position);
@@ -70,7 +73,7 @@ namespace Super_BullWhip
                 {
                     f = JointFactory.CreateDistanceJoint(doc.World, w.body, whip[i - 1].body, whip[i - 1].body.Position, whip[i - 1].body.Position);
                     f.DampingRatio = 1f;
-                    f.Frequency = 10;
+                    f.Frequency = 20;
                     f.Length = ConvertUnits.ToSimUnits(50);
                 }
                 if (i == whip.Length - 1)
@@ -92,14 +95,19 @@ namespace Super_BullWhip
             whipJoint.LocalAnchorA = whipJoint.LocalAnchorB = o.body.Position = o.body.Position;
             whipJoint.Frequency = 10;
             whipPoint.body.IgnoreCollisionWith(o.body);
+            swinging = true;
         }
         private void endWhip()
         {
             whipJoint.Frequency = 0.0001f;
+            swinging = false;
         }
         public override void earlyUpdate()
         {
             base.earlyUpdate();
+            float dd = 0;
+            if (neg) dd = 180;
+            //Console.WriteLine(MyMath.AngleDistance(MyMath.AngleBetween(pos, obj2.pos), dd));
             if (Controls.GetKey(Keys.Space) == Controls.Pressed || Controls.GetButton(Buttons.A) == Controls.Pressed)
             {
                 
@@ -112,18 +120,46 @@ namespace Super_BullWhip
             }
             if (doc.controls.getKey(Keys.Left) == Controls.Held || Controls.GetButton(Buttons.LeftThumbstickLeft) == Controls.Held)
             {
-                if (body.GetLinearVelocityFromLocalPoint(new Vector2(x, y)).X > -topspeed)
+                if (body.GetLinearVelocityFromLocalPoint(new Vector2(x, y)).X > -topspeed && !swinging)
                 body.ApplyLinearImpulse(new Vector2(-4.5f, 0));
                 //Console.WriteLine(body.GetLinearVelocityFromLocalPoint(new Vector2(x, y)));
+                neg = false;
             }
             if (doc.controls.getKey(Keys.Right) == Controls.Held || Controls.GetButton(Buttons.LeftThumbstickRight) == Controls.Held)
             {
-                if (body.GetLinearVelocityFromLocalPoint(new Vector2(x, y)).X < topspeed)
+                if (body.GetLinearVelocityFromLocalPoint(new Vector2(x, y)).X < topspeed && !swinging)
                 body.ApplyLinearImpulse(new Vector2(4.5f, 0));
+                neg = true;
             }
             if (Controls.GetKey(Keys.R) == Controls.Pressed || Controls.GetButton(Buttons.RightShoulder) == Controls.Pressed)
             {
-                whipTo(obj2);
+                //whipTo(obj2);
+                Obj ob = null;
+                float dist = 700;
+                float ab;
+                float d = 0;
+                if (neg) d = 180;
+                bool nodir = false;
+                float yy = y;
+                if (Controls.GetKey(Keys.Right) != Controls.Held && Controls.GetKey(Keys.Left) != Controls.Held)
+                {
+                    nodir = true;
+                }
+                for (int i = 0; i < doc.objList.Count; i++)
+                {
+                    Obj o = doc.objList[i];
+                    ab = Math.Abs(MyMath.AngleDistance(MyMath.AngleBetween(pos, o.pos), d));
+                    if (o.type == Obj.PointType.SwingPoint && o.body!=null && MyMath.Distance(pos,o.pos) < dist && o.y < yy && (ab < 95 || nodir))
+                    {
+                        Console.WriteLine(ab);
+                        dist = MyMath.Distance(pos, o.pos);
+                        ob = o;
+                    }
+                }
+                if (ob != null)
+                {
+                    whipTo(ob);
+                }
             }
             else if (doc.controls.getKey(Keys.R) == Controls.Held)
             {
@@ -133,7 +169,7 @@ namespace Super_BullWhip
 
 
                 //Grab nearest point and run code for it.
-                float minDist = radius;
+                /*float minDist = radius;
                 for (int index = 0; index < doc.objList.Count; index++)
                 {
                     //check distance    
@@ -155,7 +191,7 @@ namespace Super_BullWhip
                 else if (Point.type == PointType.Pullblock)
                 {
                     pull(Point);
-                }
+                }*/
             }
             if (Controls.GetKey(Keys.R) == Controls.Released || Controls.GetButton(Buttons.RightShoulder) == Controls.Released)
             {

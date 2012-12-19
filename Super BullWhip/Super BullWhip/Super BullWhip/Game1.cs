@@ -89,7 +89,18 @@ namespace Super_BullWhip
                 //Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
                 Wall floor = new Wall(this, i, 50, 0, 292, 275);
             }
-            player = new Player(this, 100, 100, 0);
+            for (int i = -4000; i < 4000; i += 291)
+            {
+                //Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
+                Wall floor = new Wall(this, i * 2, -400, 0, 292, 275);
+            }
+            for (int i = -4000; i < 4000; i += 700)
+            {
+                Obj o = new Obj(this,i,-1300,0,LoadTex("Square"));
+                o.createRecBody(1,0,1,true,true);
+                o.type = Obj.PointType.SwingPoint;
+            }
+            //player = new Player(this, 100, 100, 0);
             Obj swing = new Obj(this, 500, -300, 0, LoadTex("Platform"));
             swing.type = Obj.PointType.SwingPoint;
             Camera.Target = Global.Player;
