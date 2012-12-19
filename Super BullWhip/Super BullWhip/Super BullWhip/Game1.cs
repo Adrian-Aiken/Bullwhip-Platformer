@@ -89,6 +89,7 @@ namespace Super_BullWhip
                 //Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
                 Wall floor = new Wall(this, i, 50, 0, 292, 275);
             }
+<<<<<<< HEAD
             for (int i = -4000; i < 4000; i += 291)
             {
                 //Obj obj = new Obj(this, i, 50, 0, LoadTex("Platform"));
@@ -101,6 +102,9 @@ namespace Super_BullWhip
                 o.type = Obj.PointType.SwingPoint;
             }
             //player = new Player(this, 100, 100, 0);
+=======
+            player = new Player(this, 100, -600, 0);
+>>>>>>> 0a728cea804dcf5e74b2e6ecf1581c8cd9109996
             Obj swing = new Obj(this, 500, -300, 0, LoadTex("Platform"));
             swing.type = Obj.PointType.SwingPoint;
             Camera.Target = Global.Player;
@@ -110,8 +114,6 @@ namespace Super_BullWhip
             key.addGate(gate);
 
             //create world for physics with gravity = -10
-            
-            new Player(this, 100, -600, 0);
             
             Camera.Target = Global.Player;
 
